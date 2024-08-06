@@ -1,1 +1,22 @@
-<p>dialog-add-user works!</p>
+
+<h2 mat-dialog-title>Add User</h2>
+<mat-dialog-content>
+  Would you like to add a new user?
+
+
+  <form class="add-user-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" value="">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Last Name" value="">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>Yes</button>
+</mat-dialog-actions>
