@@ -3,15 +3,26 @@
     <div class="logo-container">
       <p>Logo</p>
     </div>
-
+    <ul class="menu-items">
+      <li>
+        <mat-icon class="mat-18">dashboard</mat-icon> Dashboard
+      </li>
+      <li><mat-icon class="mat-18">person</mat-icon> User </li>
+    </ul>
   </mat-drawer>
 
   <div class="example-sidenav-content">
     <mat-toolbar>
-      <button type="button" mat-icon-button (click)="drawer.toggle()" class="menu-icon">
+      <button
+        type="button"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        class="menu-icon"
+      >
         <mat-icon>menu</mat-icon>
       </button>
       <span>Simple CRM</span>
     </mat-toolbar>
+    <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>
