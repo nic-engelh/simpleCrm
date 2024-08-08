@@ -58,10 +58,12 @@ export class DialogAddUserComponent {
       .then((result) => {
         this.loading = false;
         console.log('Adding user is done:', result);
+        this.dialogRef.close();
       })
       .catch((error) => {
         this.loading = false;
         console.error('Error adding user:', error);
+        this.dialogRef.close();
       });
   }
 
