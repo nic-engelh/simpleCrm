@@ -16,18 +16,20 @@ import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
 import { Firestore, collection, collectionData, doc, setDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-dialog-add-user',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule],
+  imports: [ MatProgressBarModule ,MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule],
   templateUrl: './dialog-add-user.component.html',
   styleUrl: './dialog-add-user.component.scss'
 })
 export class DialogAddUserComponent {
 
   user = new User();
+  loading: boolean = false;
   birthDateCache = new Date();
   items$: Observable<any[]>;
   private firestore: Firestore = inject(Firestore);
@@ -43,6 +45,7 @@ export class DialogAddUserComponent {
 
   saveUser() {
     this.transformBirthDate();
+    this.loading = true;
     console.log(this.user);
     this.addUserToFirestore();
   }
@@ -50,11 +53,14 @@ export class DialogAddUserComponent {
   private addUserToFirestore() {
     const usersCollection = collection(this.firestore, 'users');
     const userDocRef = doc(usersCollection);
-    setDoc(userDocRef, this.user)
+    const userData = { ... this.user }
+    setDoc(userDocRef, userData)
       .then((result) => {
-        console.log('Adding user done:', result);
+        this.loading = false;
+        console.log('Adding user is done:', result);
       })
       .catch((error) => {
+        this.loading = false;
         console.error('Error adding user:', error);
       });
   }
