@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -14,9 +14,10 @@ import {
   setDoc,
   getDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from '../../models/user.class';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { CommonEngine } from '@angular/ssr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user',
@@ -28,34 +29,36 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
     MatCardModule,
     MatTableModule,
     UserComponent,
+    CommonModule,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
-export class UserComponent {
-  user = new User();
+export class UserComponent implements OnInit, OnDestroy  {
+  users$: Observable<User[]>;
+  private subscription: Subscription | undefined;
+  users= [];
 
-  constructor(public dialog: MatDialog, private firestore: AngularFirestore) {
+  constructor(public dialog: MatDialog, private firestore: Firestore) {
+    const usersCollection = collection(this.firestore, 'users');
+    this.users$ = collectionData(usersCollection, { idField: 'id' }) as Observable<User[]>;
   }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.getUsersSnapshotChanges();
-    this.getUsersValueChanges();
+    this.subscription = this.users$.subscribe(users => {
+      console.log('Users updated:', users);
+
+    });
   }
 
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
   }
 
-  getUsersValueChanges(): Observable<any[]> {
-    return this.firestore.collection('users').valueChanges();
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
-
-  getUsersSnapshotChanges(): Observable<any[]> {
-    return this.firestore.collection('users').snapshotChanges();
-  }
-
 
 }

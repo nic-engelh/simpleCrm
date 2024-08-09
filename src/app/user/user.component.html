@@ -1,33 +1,31 @@
 <mat-card appearance="outlined">
   <mat-card-content>
-
     <table class="user-table">
       <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          E-Mail
-        </th>
-        <th>
-          City
-        </th>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>City</th>
       </tr>
+
+      @for (user of users$ | async ; track $index) {
+        <tr>
+          <th>{{ user.firstName }} {{ user.lastName }}</th>
+          <th>
+            {{ user.email }}
+          </th>
+          <th> {{ user.city }}</th>
+        </tr>
+
+      }
+
       <tr>
+        <th>Peter</th>
         <th>
-          Peter
+          {{ "Peter@test.de" }}
         </th>
-        <th>
-          {{ 'Peter@test.de' }}
-        </th>
-        <th>
-          München
-        </th>
+        <th>München</th>
       </tr>
     </table>
-
-
-
   </mat-card-content>
 </mat-card>
 
