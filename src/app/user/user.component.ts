@@ -38,7 +38,7 @@ import { RouterModule } from '@angular/router';
 export class UserComponent implements OnInit, OnDestroy {
   users$: Observable<User[]>;
   private subscription: Subscription | undefined;
-  allUsers = [];
+  allUsers : User[] = [];
 
   constructor(public dialog: MatDialog, private firestore: Firestore) {
     const usersCollection = collection(this.firestore, 'users');
@@ -50,7 +50,7 @@ export class UserComponent implements OnInit, OnDestroy {
     //Add 'implements OnInit' to the class.
     this.subscription = this.users$.subscribe(users => {
       console.log('Users updated:', users);
-
+      this.allUsers = [...users];
     });
   }
 

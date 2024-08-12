@@ -1,0 +1,36 @@
+.user-detail-header {
+  min-height: 300px;
+  background-color: #4682b4;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+
+
+  mat-card-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.profil-logo {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.user-details {
+  margin-left: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100px;
+  > h2 {
+    margin-bottom: 0px;
+  }
+}
+
+
