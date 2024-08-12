@@ -2,9 +2,19 @@
   <mat-card-content>
     <img class="profil-logo" src="../assets/images/profil-logo.png" alt="Profil Logo">
     <div class="user-details">
-      <h2>Max Mustermann</h2>
-      <p>{{ "info@mustermann.de" }}</p>
+      <h2>{{ document.firstName }} {{ document.lastName }} </h2>
+      <p>{{ document.email }}</p>
     </div>
 
   </mat-card-content>
+</mat-card>
+
+<mat-card appearance="outlined" class="user-details-body">
+    <mat-card-header>
+      <mat-card-title>Address</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{document.street}}</p>
+      <p>{{ document.zipCode }} {{ document.city }}</p>
+    </mat-card-content>
 </mat-card>

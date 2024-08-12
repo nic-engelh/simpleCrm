@@ -33,4 +33,16 @@
   }
 }
 
+.user-details-body {
+margin-top: 32px;
+
+> mat-card-content {
+  margin-top: 8px;
+  > p {
+    margin-bottom: 0px;
+    color:#2F4F4F;
+  }
+}
+}
+
 
