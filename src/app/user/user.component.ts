@@ -16,8 +16,8 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../../models/user.class';
-import { CommonEngine } from '@angular/ssr';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -30,14 +30,15 @@ import { CommonModule } from '@angular/common';
     MatTableModule,
     UserComponent,
     CommonModule,
+    RouterModule,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
-export class UserComponent implements OnInit, OnDestroy  {
+export class UserComponent implements OnInit, OnDestroy {
   users$: Observable<User[]>;
   private subscription: Subscription | undefined;
-  users= [];
+  allUsers = [];
 
   constructor(public dialog: MatDialog, private firestore: Firestore) {
     const usersCollection = collection(this.firestore, 'users');

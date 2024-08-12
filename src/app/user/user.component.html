@@ -8,7 +8,7 @@
       </tr>
 
       @for (user of users$ | async ; track $index) {
-        <tr>
+        <tr [routerLink]="['/routePath'+ user.id]" routerLinkActive="router-link-active"  >
           <th>{{ user.firstName }} {{ user.lastName }}</th>
           <th>
             {{ user.email }}

@@ -70,4 +70,8 @@ export class DialogAddUserComponent {
   transformBirthDate() {
     this.user.birthDate = this.birthDateCache.getTime();
   }
+
+  closeAddUserDialog () {
+    this.dialogRef.close();
+  }
 }

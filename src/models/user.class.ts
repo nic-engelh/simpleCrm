@@ -8,6 +8,8 @@ export class User {
   city: string;
   email: string;
   company: string;
+  id: string;
+
 
 
   constructor(obj?:any) {
@@ -20,5 +22,6 @@ export class User {
     this.city = obj ? obj.city: "";
     this.email = obj ? obj.email: "";
     this.company = obj ? obj.company: "";
+    this.id = obj ? obj.id: "";
   }
 }
