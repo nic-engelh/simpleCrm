@@ -24,4 +24,5 @@ export class User {
     this.company = obj ? obj.company: "";
     this.id = obj ? obj.id: "";
   }
+
 }
