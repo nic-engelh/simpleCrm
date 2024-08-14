@@ -14,7 +14,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
-import { Firestore, collection, collectionData, doc, setDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  setDoc,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -22,12 +28,23 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   selector: 'app-dialog-add-user',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [ MatProgressBarModule ,MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule],
+  imports: [
+    MatProgressBarModule,
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    CommonModule,
+  ],
   templateUrl: './dialog-add-user.component.html',
-  styleUrl: './dialog-add-user.component.scss'
+  styleUrl: './dialog-add-user.component.scss',
 })
 export class DialogAddUserComponent {
-
   user = new User();
   loading: boolean = false;
   birthDateCache = new Date();
@@ -53,7 +70,7 @@ export class DialogAddUserComponent {
   private addUserToFirestore() {
     const usersCollection = collection(this.firestore, 'users');
     const userDocRef = doc(usersCollection);
-    const userData = { ... this.user }
+    const userData = { ...this.user };
     setDoc(userDocRef, userData)
       .then((result) => {
         this.loading = false;
@@ -71,7 +88,7 @@ export class DialogAddUserComponent {
     this.user.birthDate = this.birthDateCache.getTime();
   }
 
-  closeAddUserDialog () {
+  closeAddUserDialog() {
     this.dialogRef.close();
   }
 }

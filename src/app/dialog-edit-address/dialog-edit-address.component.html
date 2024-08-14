@@ -1,1 +1,42 @@
-<p>dialog-edit-address works!</p>
+@if (loading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<h2 mat-dialog-title>Edit User Address</h2>
+<mat-dialog-content>
+  Would you like to edit the user address?
+  <form class="add-user-form">
+    <p>
+      <mat-form-field class="full-width">
+        <mat-label>Address</mat-label>
+        <textarea [disabled]="loading" [(ngModel)]="user!.street" [ngModelOptions]="{standalone: true}"  matInput placeholder=""></textarea>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Address 2</mat-label>
+        <textarea [disabled]="loading" [(ngModel)]="user!.street2" [ngModelOptions]="{standalone: true}"  matInput></textarea>
+      </mat-form-field>
+    </p>
+
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>City</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user!.city" [ngModelOptions]="{standalone: true}"  matInput placeholder="" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Postal Code</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user!.zipCode" [ngModelOptions]="{standalone: true}"  matInput #postalCode maxlength="5" placeholder="" value="" />
+            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button [disabled]="loading" (click)="closeEditUserDialog()" mat-button mat-dialog-close>No</button>
+  <button [disabled]="loading"  mat-button mat-dialog-close cdkFocusInitial (click)="saveEditedUser()">Yes</button>
+</mat-dialog-actions>
+

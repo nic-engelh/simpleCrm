@@ -1,8 +1,11 @@
 @if (user) {
   <mat-card appearance="outlined" class="user-detail-header">
-    <button class="options-button" [matMenuTriggerFor]="menu" mat-icon-button aria-label="Further Options">
+    <button class="options-button" [matMenuTriggerFor]="menuUserDetails" mat-icon-button aria-label="Further Options">
       <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-menu #menuUserDetails="matMenu">
+        <button mat-menu-item (click)="editUserDetails()">Edit</button>
+      </mat-menu>
     <mat-card-content>
       <img class="profil-logo" src="../assets/images/profil-logo.png" alt="Profil Logo">
       <div class="user-details">
@@ -19,11 +22,11 @@
         <p>{{ user.street}}</p>
         <p>{{ user.zipCode }} {{ user.city }}</p>
       </mat-card-content>
-      <button class="options-button" [matMenuTriggerFor]="menu" mat-icon-button aria-label="Further Options">
+      <button class="options-button" [matMenuTriggerFor]="menuUserAddress" mat-icon-button aria-label="Further Options">
         <mat-icon>more_vert</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="editUserDetails()">Edit</button>
+      <mat-menu #menuUserAddress="matMenu">
+        <button mat-menu-item (click)="editUserAddress()">Edit</button>
       </mat-menu>
   </mat-card>
 } @else {

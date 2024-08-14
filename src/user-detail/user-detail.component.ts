@@ -10,7 +10,10 @@ import { doc, getDoc } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.class';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DialogEditUserComponent } from '../app/dialog-edit-user/dialog-edit-user.component';
+import { DialogEditAddressComponent } from '../app/dialog-edit-address/dialog-edit-address.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -24,6 +27,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    MatDialogModule,
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss',
@@ -31,10 +35,14 @@ import {MatMenuModule} from '@angular/material/menu';
 export class UserDetailComponent implements OnInit, OnDestroy {
   id: string | null = null;
   document: any;
-  user: User | null = null;
+  user = new User;
   private subscription: Subscription | null = null;
 
-  constructor(private route: ActivatedRoute, private firestore: Firestore) {}
+  constructor(
+    private route: ActivatedRoute,
+    private firestore: Firestore,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.route.paramMap.subscribe((params) => {
@@ -61,6 +69,13 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   editUserDetails() {
+    this.dialog.open(DialogEditUserComponent);
+  }
 
+  editUserAddress() {
+    const dialog = this.dialog.open(DialogEditAddressComponent);
+    if (dialog) {
+      dialog.componentInstance.user = this.user;
+    }
   }
 }
