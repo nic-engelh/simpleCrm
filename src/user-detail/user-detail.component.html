@@ -1,10 +1,13 @@
-@if (document) {
+@if (user) {
   <mat-card appearance="outlined" class="user-detail-header">
+    <button class="options-button" [matMenuTriggerFor]="menu" mat-icon-button aria-label="Further Options">
+      <mat-icon>more_vert</mat-icon>
+    </button>
     <mat-card-content>
       <img class="profil-logo" src="../assets/images/profil-logo.png" alt="Profil Logo">
       <div class="user-details">
-        <h2>{{ document.firstName }} {{ document.lastName }} </h2>
-        <p>{{ document.email }}</p>
+        <h2>{{ user.firstName }} {{ user.lastName }} </h2>
+        <p>{{ user.email }}</p>
       </div>
     </mat-card-content>
   </mat-card>
@@ -13,9 +16,15 @@
         <mat-card-title>Address</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>{{document.street}}</p>
-        <p>{{ document.zipCode }} {{ document.city }}</p>
+        <p>{{ user.street}}</p>
+        <p>{{ user.zipCode }} {{ user.city }}</p>
       </mat-card-content>
+      <button class="options-button" [matMenuTriggerFor]="menu" mat-icon-button aria-label="Further Options">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editUserDetails()">Edit</button>
+      </mat-menu>
   </mat-card>
 } @else {
   <div class="user-detail-loading">
