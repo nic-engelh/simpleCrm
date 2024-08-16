@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogActions,
@@ -16,16 +16,14 @@ import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
 import {
   Firestore,
-  collection,
-  collectionData,
+  updateDoc,
   doc,
-  setDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-dialog-edit-user',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     MatProgressBarModule,
     MatButtonModule,
@@ -42,13 +40,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   templateUrl: './dialog-edit-user.component.html',
   styleUrl: './dialog-edit-user.component.scss',
 })
-export class DialogEditUserComponent {
+export class DialogEditUserComponent implements OnInit {
   user = new User();
   loading: boolean = false;
   birthDateCache = new Date();
+  userId: string = "";
 
-  constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>) {
+  constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>, private firestore: Firestore) { }
 
+  ngOnInit(): void {
+    console.log("updated UserId", this.userId);
   }
 
   transformBirthDate() {
@@ -59,5 +60,19 @@ export class DialogEditUserComponent {
     this.dialogRef.close();
   }
 
-  saveEditedUser() {}
+  saveEditedUser() {
+    this.updateDocument();
+  }
+
+  updateDocument() : void {
+    this.loading = true;
+    const userRef = doc(this.firestore, `users/${this.userId}`);
+    console.log("updated User", this.user);
+    if (!this.user.id) {
+      this.user.id = this.userId;
+    }
+    const updatedUser = this.user.toJSON();
+    updateDoc(userRef, updatedUser);
+    this.loading = false;
+  }
 }

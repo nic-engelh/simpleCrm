@@ -25,4 +25,19 @@ export class User {
     this.id = obj ? obj.id: "";
   }
 
+  public toJSON() {
+    return {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      birthDate: this.birthDate,
+      street: this.street,
+      street2: this.street2,
+      zipCode: this.zipCode,
+      city: this.city,
+      email: this.email,
+      company: this.company,
+      id: this.id,
+    }
+  }
+
 }

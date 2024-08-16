@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogActions,
@@ -10,18 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, NgModel } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
 import {
   Firestore,
-  collection,
-  collectionData,
   doc,
-  setDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
@@ -37,7 +32,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
     CommonModule,
   ],
   templateUrl: './dialog-edit-address.component.html',
@@ -45,15 +39,29 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class DialogEditAddressComponent {
   loading = false;
-  user?: User;
+  user = new User();
+  userId: string = "";
 
-  constructor(public dialogRef: MatDialogRef<DialogEditAddressComponent>) {}
+  constructor(public dialogRef: MatDialogRef<DialogEditAddressComponent>,private firestore: Firestore) {}
 
 
-  saveEditedUser() {}
+  saveEditedUser() {
+    this.updateDocument();
+  }
 
   closeEditUserDialog() {
     this.dialogRef.close();
+  }
+
+
+  updateDocument() : void {
+    const userRef = doc(this.firestore, `users/${this.userId}`);
+    console.log("updated User", this.user);
+    if (!this.user.id) {
+      this.user.id = this.userId;
+    }
+    const updatedUser = this.user.toJSON();
+    updateDoc(userRef, updatedUser);
   }
 
 }

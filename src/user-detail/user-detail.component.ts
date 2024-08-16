@@ -33,7 +33,7 @@ import { DialogEditAddressComponent } from '../app/dialog-edit-address/dialog-ed
   styleUrl: './user-detail.component.scss',
 })
 export class UserDetailComponent implements OnInit, OnDestroy {
-  id: string | null = null;
+  id: string = "";
   document: any;
   user = new User;
   private subscription: Subscription | null = null;
@@ -46,7 +46,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id');
+      if(params) {
+        this.id = params.get('id') ?? '';
+      }
+
     });
 
     if (this.id) {
@@ -69,13 +72,19 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   editUserDetails() {
-    this.dialog.open(DialogEditUserComponent);
+    const dialog = this.dialog.open(DialogEditUserComponent);
+    if (dialog) {
+      dialog.componentInstance.user = new User(this.user);
+      dialog.componentInstance.userId = this.id;
+      console.log("transfered User", this.user);
+    }
   }
 
   editUserAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
     if (dialog) {
-      dialog.componentInstance.user = this.user;
+      dialog.componentInstance.user = new User(this.user);
+      console.log("transfered User", this.user);
     }
   }
 }
