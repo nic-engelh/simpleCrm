@@ -1,0 +1,100 @@
+@if (loading) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+
+<h2 mat-dialog-title>Edit User Details</h2>
+<mat-dialog-content>
+  Would you like to edit the user details?
+
+  <form class="add-user-form">
+    <mat-form-field class="full-width">
+      <mat-label>Company</mat-label>
+      <input
+        [disabled]="loading"
+        [(ngModel)]="user.company"
+        [ngModelOptions]="{ standalone: true }"
+        matInput
+        value=""
+      />
+    </mat-form-field>
+
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>First name</mat-label>
+            <input
+              [disabled]="loading"
+              [(ngModel)]="user.firstName"
+              [ngModelOptions]="{ standalone: true }"
+              matInput
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input
+              [disabled]="loading"
+              [(ngModel)]="user.lastName"
+              [ngModelOptions]="{ standalone: true }"
+              matInput
+            />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <mat-form-field class="full-width">
+          <mat-label>Birthday</mat-label>
+          <mat-label>Choose a date</mat-label>
+          <input
+            [disabled]="loading"
+            [(ngModel)]="birthDateCache"
+            [ngModelOptions]="{ standalone: true }"
+            matInput
+            [matDatepicker]="picker"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </tr>
+    </table>
+
+    <p>
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          [disabled]="loading"
+          [(ngModel)]="user.email"
+          [ngModelOptions]="{ standalone: true }"
+          type="email"
+          matInput
+          placeholder="Ex. pat@example.com"
+        />
+      </mat-form-field>
+    </p>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    [disabled]="loading"
+    (click)="closeEditUserDialog()"
+    mat-button
+    mat-dialog-close
+  >
+    No
+  </button>
+  <button
+    [disabled]="loading"
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    (click)="saveEditedUser()"
+  >
+    Yes
+  </button>
+</mat-dialog-actions>

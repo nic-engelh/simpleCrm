@@ -1,0 +1,82 @@
+@if (loading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+
+<h2 mat-dialog-title>Add User</h2>
+<mat-dialog-content>
+  Would you like to add a new user?
+
+  <form class="add-user-form">
+    <mat-form-field class="full-width">
+      <mat-label>Company</mat-label>
+      <input [disabled]="loading" [(ngModel)]="user.company" [ngModelOptions]="{standalone: true}" matInput value="" />
+    </mat-form-field>
+
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>First name</mat-label>
+            <input [disabled]="loading"  [(ngModel)]="user.firstName" [ngModelOptions]="{standalone: true}"  matInput />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user.lastName" [ngModelOptions]="{standalone: true}"  matInput />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <mat-form-field class="full-width">
+          <mat-label>Birthday</mat-label>
+          <mat-label>Choose a date</mat-label>
+          <input [disabled]="loading" [(ngModel)]="birthDateCache" [ngModelOptions]="{standalone: true}"  matInput [matDatepicker]="picker" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </tr>
+    </table>
+
+    <p>
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input [disabled]="loading" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}" type="email" matInput placeholder="Ex. pat@example.com" />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Address</mat-label>
+        <textarea [disabled]="loading" [(ngModel)]="user.street" [ngModelOptions]="{standalone: true}"  matInput placeholder=""></textarea>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Address 2</mat-label>
+        <textarea [disabled]="loading" [(ngModel)]="user.street2" [ngModelOptions]="{standalone: true}"  matInput></textarea>
+      </mat-form-field>
+    </p>
+
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>City</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user.city" [ngModelOptions]="{standalone: true}"  matInput placeholder="" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Postal Code</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user.zipCode" [ngModelOptions]="{standalone: true}"  matInput #postalCode maxlength="5" placeholder="" value="" />
+            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button [disabled]="loading" (click)="closeAddUserDialog()" mat-button mat-dialog-close>No</button>
+  <button [disabled]="loading"  mat-button mat-dialog-close cdkFocusInitial (click)="saveUser()">Yes</button>
+</mat-dialog-actions>
