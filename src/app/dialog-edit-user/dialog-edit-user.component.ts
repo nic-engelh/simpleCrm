@@ -62,6 +62,7 @@ export class DialogEditUserComponent implements OnInit {
 
   saveEditedUser() {
     this.updateDocument();
+    this.dialogRef.close();
   }
 
   updateDocument() : void {

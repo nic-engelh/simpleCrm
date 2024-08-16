@@ -84,6 +84,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     const dialog = this.dialog.open(DialogEditAddressComponent);
     if (dialog) {
       dialog.componentInstance.user = new User(this.user);
+      dialog.componentInstance.userId = this.id;
       console.log("transfered User", this.user);
     }
   }
